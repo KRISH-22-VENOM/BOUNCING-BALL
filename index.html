@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Ball Animation</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="ballCanvas" width="400" height="500"></canvas>
+    <script>
+        // Create global variables for ball position, ball properties
+        let canvas = document.getElementById('ballCanvas');
+        let ctx = canvas.getContext('2d');
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        let dx = 2;
+        let dy = 2;
+        let ballRadius = 40;
+
+        // set up everything that doesn't change
+        function setup() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // create a ball on a screen
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // move a ball continuously until it reaches the boundary of a screen
+        function updateBallPosition() {
+            x += dx;
+            y += dy;
+
+            // when the ball reaches the boundary, reverse the movement
+            if(x + ballRadius > canvas.width || x - ballRadius < 0) {
+                dx = -dx;
+            }
+
+            if(y + ballRadius > canvas.height || y - ballRadius < 0) {
+                dy = -dy;
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            setup();
+            drawBall();
+            updateBallPosition();
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation
+        animate();
+    </script>
+</body>
+</html>
